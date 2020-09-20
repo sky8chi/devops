@@ -1,0 +1,19 @@
+---
+- hosts: L
+  remote_user: root
+  gather_facts: False
+  vars:
+    - ssh_file: /etc/ssh/sshd_config
+  tasks:
+    - name: replace useDNS
+      lineinfile:
+        dest: "{{ ssh_file }}"
+        state: present
+        line: useDNS no 
+    - name: grep
+      shell: grep useDNS {{ ssh_file }}
+      register: show_rlt
+    - name: show
+      debug: var=show_rlt.stdout
+
+

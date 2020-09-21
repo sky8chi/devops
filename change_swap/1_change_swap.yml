@@ -1,0 +1,16 @@
+---
+- hosts: L
+  remote_user: root
+  gather_facts: False
+  tasks:
+    - name: open swap
+      shell: "swapon -a"
+  tags: open
+
+- hosts: L
+  remote_user: root
+  gather_facts: False
+  tasks:
+    - name: close swap
+      shell: "swapoff -a"
+  tags: close

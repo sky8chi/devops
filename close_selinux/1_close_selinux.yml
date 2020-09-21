@@ -1,0 +1,12 @@
+- hosts: L #close selinux
+  gather_facts: False
+  tasks:
+    - name: setenforce 0
+      shell: "setenforce 0"
+      failed_when: false
+
+    - name: set selinux disabled
+      replace:
+        path: /etc/selinux/config
+        regexp: '^SELINUX=enforcing'
+        replace: 'SELINUX=disabled'

@@ -1,0 +1,9 @@
+- hosts: L1
+  remote_user: root
+  vars:
+    - home_path: /Users/skychi/
+  tasks:
+  - name: copy ssh key
+    authorized_key:
+      user: test
+      key: "{{ lookup('file', '{{ home_path }}.ssh/id_rsa.pub') }}"

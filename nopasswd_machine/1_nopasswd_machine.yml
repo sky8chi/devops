@@ -1,9 +1,9 @@
-- hosts: L1
+- hosts: L2
   remote_user: root
-  vars:
-    - home_path: /Users/skychi/
+  gather_facts: False
   tasks:
   - name: copy ssh key
     authorized_key:
-      user: test
-      key: "{{ lookup('file', '{{ home_path }}.ssh/id_rsa.pub') }}"
+      user: root
+      key: "{{ lookup('file', '~/.ssh/id_dsa.pub') }}"
+      state: present

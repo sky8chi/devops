@@ -7,5 +7,9 @@
 * [yum_install (yum安装常用的软件)](yum_install)
 * [stop_firewalld (关闭防火墙)](stop_firewalld)
 * [change_swap (开关swap)](change_swap)
+* [close_selinux(关闭安全)](close_selinux)
 
 ## 应用
+
+* [mysql](mysql)
+

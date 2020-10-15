@@ -1,9 +1,0 @@
----
-- hosts: L
-  gather_facts: False
-  tasks:
-    - name: stop firewalld
-      service:
-        name: firewalld
-        state: stopped
-        enabled: no

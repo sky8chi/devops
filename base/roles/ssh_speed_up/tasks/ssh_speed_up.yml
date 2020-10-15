@@ -1,0 +1,12 @@
+- name: replace useDNS
+  lineinfile:
+    dest: "{{ ssh_file }}"
+    state: present
+    line: useDNS no 
+- name: grep
+  shell: grep useDNS {{ ssh_file }}
+  register: show_ssh_usedns_grep_rlt
+- name: show
+  debug: var=show_ssh_usedns_grep_rlt.stdout
+
+

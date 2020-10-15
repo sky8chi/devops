@@ -1,0 +1,30 @@
+---
+- hosts: all
+  remote_user: root
+  gather_facts: false
+  roles:
+    - role: nopasswd_machine
+    - role: ssh_speed_up
+    - role: stop_firewalld
+    - role: close_selinux
+    - role: yum_install
+
+- hosts: all
+  remote_user: root
+  gather_facts: false
+  vars:
+    #run_tag: close_tty
+    #run_tag: open_tty
+    run_tag: false
+  roles:
+    - role: change_require_tty
+
+- hosts: all
+  remote_user: root
+  gather_facts: false
+  vars:
+    #run_tag: close_swap
+    #run_tag: open_swap
+    run_tag: false
+  roles:
+    - role: change_swap

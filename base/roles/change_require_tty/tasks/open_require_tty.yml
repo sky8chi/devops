@@ -1,0 +1,11 @@
+- name: open tty
+  replace:
+    path: /etc/sudoers
+    regexp: '^#(Defaults\s+requiretty)'
+    replace: '\1'
+- name: grep open tty
+  shell: grep requiretty /etc/sudoers
+  register: show_opentty_rlt
+- name: show open tty
+  debug: var=show_opentty_rlt
+

@@ -1,0 +1,10 @@
+- name: close tty
+  replace:
+    path: /etc/sudoers
+    regexp: '^(Defaults\s+requiretty)'
+    replace: '#\1'
+- name: grep close tty
+  shell: grep requiretty /etc/sudoers
+  register: show_closetty_rlt
+- name: show close tty
+  debug: var=show_closetty_rlt

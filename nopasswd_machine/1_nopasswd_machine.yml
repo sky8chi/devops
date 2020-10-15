@@ -1,9 +1,0 @@
-- hosts: L2
-  remote_user: root
-  gather_facts: False
-  tasks:
-  - name: copy ssh key
-    authorized_key:
-      user: root
-      key: "{{ lookup('file', '~/.ssh/id_dsa.pub') }}"
-      state: present

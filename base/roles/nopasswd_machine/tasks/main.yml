@@ -1,0 +1,2 @@
+- include: nopasswd_machine.yml
+- include: test_hosts.yml

@@ -1,0 +1,4 @@
+- include: open_swap.yml
+  when: run_tag == 'open_swap'
+- include: close_swap.yml
+  when: run_tag == 'close_swap'

@@ -4,14 +4,18 @@
 10.200.120.212 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
 [L3]
 10.200.120.213 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
+[L4]
+10.200.120.214 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
+[L5]
+10.200.120.215 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
+
 [L:children]
 L1
 L2
 L3
+L4
+L5
 
-[B:children]
-L1
-L3
 
 [mysql_M:children]
 L2
@@ -21,15 +25,25 @@ L3
 master_host_ip={{ groups['L2'][0] }}
 
 
+
 [M1]
 10.200.120.240 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
 [M2]
 10.200.120.241 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
-[N]
+[N1]
 10.200.120.245 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
+[N2]
 10.200.120.246 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
+[N3]
 10.200.120.247 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
-[k8s:children]
+[N4]
+10.200.120.248 ansible_connection=ssh ansible_ssh_user=root ansible_ssh_pass="chitianxiang"
+[M:children]
 M1
 M2
-N
+[N:children]
+N1
+N2
+N3
+N4
+

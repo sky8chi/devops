@@ -13,6 +13,12 @@ L3
 L1
 L3
 
+[mysql_M:children]
+L2
+[mysql_S:children]
+L3
+[mysql_S:vars]
+master_host_ip={{ groups['L2'][0] }}
 
 
 [M1]

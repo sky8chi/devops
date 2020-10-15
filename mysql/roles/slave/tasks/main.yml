@@ -1,0 +1,4 @@
+---
+- name: Configure slave replication
+  include: rep_MySQL.yml
+

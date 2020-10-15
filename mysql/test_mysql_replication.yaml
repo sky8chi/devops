@@ -1,0 +1,28 @@
+---
+- hosts: mysql_S
+  gather_facts: yes
+  tasks:
+#  - name: Set root user password
+#    mysql_user:
+#        host: "{{ item }}"
+#        name: root
+#        password: "Capgemini123"
+#        # Login without credentials
+#        check_implicit_admin: yes
+#        state: present
+#        login_user: "root"
+#        login_password: "Capgemini123"
+#    with_items:
+#        - localhost
+#        - "{{ ansible_hostname }}"
+#        - 127.0.0.1
+  - name: Get Mysql-master Status
+    mysql_replication: 
+      mode: "getslave"
+      login_user: "root"
+      login_password: "{{root_password}}" 
+      login_unix_socket: "{{mysql_socket}}"
+    register: master_status
+    tags: master 
+  - name: show
+    debug: var=master_status

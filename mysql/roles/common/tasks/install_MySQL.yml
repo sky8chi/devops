@@ -1,0 +1,35 @@
+---
+- name: delete data dir
+  file: path={{datadir}} state=absent
+- name: create data dir
+  file: path={{datadir}} state=directory owner={{user}} group={{user}}
+- name: Copy MySQL configure file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+- name: grant executable permission to bin dir
+  shell: cd {{ basedir}} && chmod +x *
+- name: Initialize the MySQL
+  shell: cd {{ basedir}} && bin/mysqld --initialize  --basedir={{ basedir }} --datadir={{ datadir }} --user={{ user }} > /tmp/mysql_password.txt 2>&1
+
+- name: Execution environment variable
+  lineinfile:
+    path: /etc/profile
+    line: export PATH={{ basedir }}/bin:$PATH
+
+- name: Copy MySQL start file
+  template: src=mysqld.j2 dest=/etc/init.d/mysqld mode=755 owner={{user}}
+- name: create run dir
+  file: path={{rundir}} state=directory owner={{user}} group={{user}}
+- name: Stop MySQL if it is running
+  shell: /etc/init.d/mysqld stop
+  ignore_errors: yes
+- name: start MySQL
+  shell: /etc/init.d/mysqld start
+
+- name: Get Intial Password
+  shell: awk '/password/ {print $11}' /tmp/mysql_password.txt
+  register: password
+
+- name: Change Password
+  shell: source /etc/profile && mysql -uroot -p"{{ password.stdout }}"  --connect-expired-password -e "SET PASSWORD = PASSWORD('{{ root_password }}');flush privileges;"
+- name: add mysqld to chkconfig
+  shell: chkconfig --add mysqld

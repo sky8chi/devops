@@ -1,0 +1,41 @@
+---
+
+- name: Create account for replication
+  tags: change
+  mysql_user:
+    login_password: "{{ root_password }}"
+    login_user: root
+    host: "{{ ''.join(hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[0])+('.%')+('.%')+('.%') }}"
+    name: "{{ rep_user }}"
+    password: "{{ rep_password }}"
+    login_unix_socket: "{{ mysql_socket }}"
+    priv: "*.*:REPLICATION SLAVE"
+    state: present
+   
+
+
+
+- name:  create business user:{{myuser_user}} which also have select,delete,update priv
+  mysql_user:
+    #login_host: localhost
+    login_password: "{{ root_password }}"
+    login_user: root
+    name: "{{ myuser_user }}"
+    password: "{{ myuser_password }}"
+    host: '%' 
+    login_unix_socket: "{{ mysql_socket }}"
+    priv: "*.*:select,delete,update"
+    state: present
+
+
+- name: Get Mysql-master Status
+  mysql_replication: 
+    mode: getmaster
+    login_user: root
+    login_password: "{{ root_password }}" 
+    login_unix_socket: "{{ mysql_socket }}"
+  register: master_status
+  tags: master 
+
+  
+

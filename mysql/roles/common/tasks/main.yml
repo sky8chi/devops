@@ -1,0 +1,6 @@
+---
+- name: Base Settings
+  include: copy_file.yml
+
+- name: Install MySQL 
+  include: install_MySQL.yml 

@@ -9,7 +9,7 @@
 * ~~[change_swap (开关swap)](change_swap)~~
 * ~~[close_selinux(关闭安全)](close_selinux)~~
 
-* [base(基础安装)](base)
+* [base(基础集成安装)](base)
 
 ## 应用
 

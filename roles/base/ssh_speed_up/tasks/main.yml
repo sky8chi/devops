@@ -1,0 +1,2 @@
+- include: ssh_speed_up.yml
+  tags: ssh_speed_up

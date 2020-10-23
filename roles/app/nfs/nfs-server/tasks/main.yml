@@ -1,0 +1,19 @@
+- name: install rpc and nfs
+  yum: 
+    name: ["nfs-utils", "rpcbind"] 
+    state: installed 
+    use_backend: yum
+- name: create conf
+  copy:
+    content: "{{ data_dir }} *(insecure,rw,sync,no_root_squash)"
+    dest: /etc/exports
+    owner: nfsnobody
+    group: nfsnobody
+    mode: 0644
+  notify: restart nfs server
+
+- name: boot server
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+    - rpcbind
+    - nfs

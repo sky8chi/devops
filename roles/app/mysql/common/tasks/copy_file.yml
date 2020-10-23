@@ -1,0 +1,48 @@
+---
+- name: install mandatory packages
+  yum: 
+    name: ['libaio', 'unzip', 'python2-PyMySQL'] 
+    state: latest
+
+- name: debug package home path
+  debug: var="pack_home"
+
+- name: Create mysql group
+  group: name={{ user }} state=present
+
+- name: Create mysql user
+  user: name={{ user }}  group={{ user }} home=/home/{{user}} shell=/bin/bash state=present
+
+- name: Copy MySQL Package
+  copy: src=mysql.zip dest={{pack_home}}/mysql.zip owner={{user}}
+
+- name: Unpacking package
+  unarchive: 
+    creates: ansible_mysql_unarchive
+    src: "{{pack_home}}/mysql.zip" 
+    dest: "{{pack_home}}/"
+    remote_src: yes 
+    owner: "{{user}}" 
+    list_files: yes
+  register: mysql_list_files
+
+- name: Fix permissions on the extract directory and sub-directories
+  file:
+    path: "{{pack_home}}/{{ mysql_list_files.files[0].split('/')[0] }}"
+    owner: "{{user}}"
+  #  recurse: yes
+
+- name: rm link {{pack_home}}/mysql
+  file: path={{pack_home}}/mysql state=absent
+
+- name: link {{ mysql_list_files.files[0].split('/')[0] }} to mysql 
+  file: src={{pack_home}}/{{ mysql_list_files.files[0].split('/')[0] }} dest={{pack_home}}/mysql state=link owner={{user}}
+
+- name: Create data dir
+  file: path={{ datadir}} state=directory mode=755 owner={{user}}
+
+- name: Create logs dir
+  file: path={{ logdir }} state=directory mode=755 owner={{ user }} group={{ user }}
+
+- name: Create error file
+  file: path={{ logdir }}/err.log state=touch mode=755 owner={{ user }} group={{ user }}

@@ -1,8 +1,0 @@
-[master]
-10.4.0.17
-
-[slave]
-10.4.0.22
-
-[slave:vars]
-master_host_ip=10.4.0.17

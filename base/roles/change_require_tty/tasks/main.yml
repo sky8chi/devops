@@ -1,4 +1,0 @@
-- include: close_require_tty.yml
-  when: run_tag == 'close_tty'
-- include: open_require_tty.yml
-  when: run_tag == 'open_tty'

@@ -1,0 +1,33 @@
+---
+- hosts: all
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - { role: base/nopasswd_machine, tags: nopasswd_machine }
+    - role: base/ssh_speed_up
+    - role: base/stop_firewalld
+    - role: base/close_selinux
+    - role: base/yum_install
+
+- hosts: all
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    #run_require_tty_tag: close_tty
+    #run_require_tty_tag: open_tty
+    run_require_tty_tag: false
+  roles:
+    - role: base/change_require_tty
+
+- hosts: all
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    #run_swap_tag: close_swap
+    #run_swap_tag: open_swap
+    run_swap_tag: false
+  roles:
+    - role: base/change_swap

@@ -1,0 +1,4 @@
+- include: yum_install.yml
+  tags:
+  - yum_install
+  - base 

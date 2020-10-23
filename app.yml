@@ -1,0 +1,83 @@
+
+---
+- hosts: test
+  remote_user: root
+  tasks:
+    - name: debug
+      debug:  msg={{ aaa }}
+  tags: test
+
+
+#=======================mysql==============
+
+- hosts: mysql_M, mysql_S
+  remote_user: root
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars_files: 
+    - vars/mysql_vars.yml
+  roles:
+    - role: app/mysql/common
+  tags:
+    - mysql
+    - mysql_s
+    - mysql_m
+
+- hosts: mysql_M,
+  remote_user: root
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars_files: 
+    - vars/mysql_vars.yml
+  roles:
+    - app/mysql/master
+  tags:
+    - mysql
+    - mysql_m  
+
+
+- hosts: mysql_S
+  remote_user: root
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars_files: 
+    - vars/mysql_vars.yml
+  roles:
+    - role: app/mysql/slave
+  tags: 
+    - mysql
+    - mysql_s
+
+- hosts: mysql_S
+  gather_facts: yes
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars_files: 
+    - vars/mysql_vars.yml
+  tasks:
+  - name: Get Mysql-master Status
+    mysql_replication:
+      mode: "getslave"
+      login_user: "root"
+      login_password: "{{root_password}}"
+      login_unix_socket: "{{mysql_socket}}"
+    register: master_status
+  - name: show
+    debug: var=master_status
+  tags:
+    - mysql
+    - mysql_s
+#====================nfs=========================
+- hosts: nfs_svr
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - app/nfs/nfs-server
+  tags: 
+    - nfs
+    - nfs_svr
+
+- hosts: nfs_cli
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - app/nfs/nfs-client
+  tags:
+    - nfs
+    - nfs_cli

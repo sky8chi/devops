@@ -6,3 +6,4 @@
   yum:
     name: ["vim", "wget", "net-tools", "rsync", "tmux", "mtr", "nmon", "strace", "python3", "python3-pip", "lsof"]
     state: present
+

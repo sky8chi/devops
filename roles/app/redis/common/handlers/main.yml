@@ -1,0 +1,10 @@
+---
+# handlers file for common
+
+- name: restart redis
+  vars:
+    redisPort: "{{ item }}"
+  service:
+    name: redis-{{ redisPort }}
+    state: restarted
+  with_items: "{{ redisPorts }}"

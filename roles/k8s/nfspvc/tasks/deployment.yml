@@ -1,0 +1,6 @@
+- name: start a nfs deployment
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'deployment.yml.j2') }}"
+    validate:
+      fail_on_error: no

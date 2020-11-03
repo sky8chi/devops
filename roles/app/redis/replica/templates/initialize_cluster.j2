@@ -1,0 +1,18 @@
+#host_string="{% for host in groups['all'] %}{{ hostvars[host]['inventory_hostname'] }}:6379 {% endfor %}"
+{% set masters = [] %}
+{% set slaves = [] %}
+{%- for host in groups['redis'] -%}
+  {%- if loop.first -%}
+    {%- for replicaPair in hostvars[host]['redisReplica'] -%}
+      {%- for replicaHost in replicaPair -%}
+        {%- if loop.first -%}
+          {{ masters.append(hostvars[replicaHost]['ansible_host'] ~ ":" ~ replicaPair[replicaHost])}}
+        {%- else -%}
+          {{ slaves.append(hostvars[replicaHost]['ansible_host'] ~ ":" ~ replicaPair[replicaHost])}}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+ 
+yes "yes" | {{ redisInstallDir }}/{{ redisVersion }}/src/redis-cli --cluster  create {{ masters|join(' ') ~ ' ' ~ slaves|join(' ')}} --cluster-replicas 1

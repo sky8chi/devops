@@ -81,3 +81,21 @@
   tags:
     - nfs
     - nfs_cli
+
+#========================moongo=====================
+- hosts: redis
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - app/redis/common
+  tags:
+    - redis
+
+- hosts: redis[0]
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - app/redis/replica
+  tags:
+    - redis-replica
+    - redis

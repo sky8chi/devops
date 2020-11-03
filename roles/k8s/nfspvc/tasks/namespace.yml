@@ -1,0 +1,7 @@
+- name: create nfs namespace
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'namespace.yml.j2') }}"
+    validate:
+      fail_on_error: no
+      #version: 1.17.6

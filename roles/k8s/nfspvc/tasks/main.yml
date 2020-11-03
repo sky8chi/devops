@@ -1,0 +1,3 @@
+- include: namespace.yml
+- include: serviceAccount.yml
+- include: deployment.yml

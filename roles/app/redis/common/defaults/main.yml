@@ -1,0 +1,4 @@
+---
+# defaults file for common
+redisVersion: redis-6.0.6
+redisInstallDir: /home/data

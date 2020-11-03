@@ -1,0 +1,10 @@
+#- name: print all 内置 vars
+#  debug: var=hostvars[inventory_hostname]
+
+
+- name: download {{ redisVersion }}
+  get_url: 
+    url: http://download.redis.io/releases/{{ redisVersion }}.tar.gz
+    dest: roles/app/redis/common/files
+  delegate_to: localhost
+  run_once: true

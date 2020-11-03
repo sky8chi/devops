@@ -1,0 +1,8 @@
+- name: start redis
+  vars:
+    redisPort: "{{ item }}"
+  systemd:
+    name: redis-{{ redisPort }}
+    state: started
+    daemon_reload: yes
+  with_items: "{{ redisPorts }}"

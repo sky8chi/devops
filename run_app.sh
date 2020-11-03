@@ -5,5 +5,8 @@ if [[ -z ${TAGS} ]]; then
     echo 'tags: nfs'
     exit;
 fi
+
+workdir=$(cd $(dirname $0); pwd)
+cd ${workdir}
 ansible-playbook -t ${TAGS} -i inventory/cluster/hosts.yml app.yml
 

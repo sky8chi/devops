@@ -1,0 +1,4 @@
+- name: install openshift, kubernetes-validate
+  pip:
+    executable: pip3
+    name: openshift, kubernetes-validate

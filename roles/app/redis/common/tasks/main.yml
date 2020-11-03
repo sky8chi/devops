@@ -1,0 +1,5 @@
+---
+# tasks file for common
+#- include: download.yml
+- include: prepare.yml
+- include: start.yml

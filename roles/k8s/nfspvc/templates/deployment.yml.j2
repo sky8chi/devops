@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-client-provisioner
+  labels:
+    app: nfs-client-provisioner
+  namespace: {{ namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ pvDeployName }}
+  template:
+    metadata:
+      labels:
+        app: {{ pvDeployName }}
+    spec:
+      serviceAccountName: {{ serviceAccountName }}
+      containers:
+        - name: {{ pvDeployName }}
+          image: quay.io/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes   # 此处不能更改，这是镜像默认生成pv地址，当时改了这块，死活不生效，pvc pv又是创建成功，查了好久
+          env:
+            - name: PROVISIONER_NAME
+              value: {{ pvName }}
+            - name: NFS_SERVER
+              value: {{ nfsServer }}
+            - name: NFS_PATH
+              value: {{ nfsPath }}
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: {{ nfsServer }}
+            path: {{ nfsPath }}

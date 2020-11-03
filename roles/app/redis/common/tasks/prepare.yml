@@ -1,0 +1,78 @@
+- name: mkdir {{ redisInstallDir }}
+  file:
+    path: "{{ redisInstallDir }}"
+    state: directory
+
+- name: copy and unarchive
+  unarchive:
+    copy: yes
+    src: "{{ redisVersion }}.tar.gz"
+    dest: "{{ redisInstallDir }}"
+
+- name: set fact redisDir
+  set_fact:
+    redisDir: "{{ redisInstallDir }}/{{ redisVersion }}"
+
+- name: yum scl
+  yum: 
+    name: centos-release-scl
+    state: present 
+
+- name: yum install gcc make
+  yum: 
+    name:
+      - gcc
+      - make
+      - devtoolset-9-gcc 
+      - devtoolset-9-gcc-c++ 
+      - devtoolset-9-binutils
+    state: present
+
+- name: enable gcc9
+  lineinfile:
+    dest: ~/.bashrc
+    line: "source /opt/rh/devtoolset-9/enable"
+
+- name: make redis
+  make:
+    chdir: "{{ redisDir }}"
+    target: install
+    file: "{{ redisDir }}/Makefile"
+    params: 
+      MALLOC: libc
+
+- name: create directory
+  file:
+    path: "{{ redisDir }}/{{ item }}"
+    state: directory
+  with_items:
+    - config
+    - log
+    - data
+    - node
+
+- name: create redis conf with port
+  vars:
+    redisPort: "{{ item }}"
+  template:
+    src: redis.conf.j2
+    dest: "{{ redisDir }}/config/redis-{{ redisPort }}.conf"
+  with_items: "{{ redisPorts }}"
+  notify:
+    - restart redis
+
+- name: create redis service with port
+  vars:
+    redisPort: "{{ item }}"
+  template:
+    src: redis.service.j2
+    dest: "/usr/lib/systemd/system/redis-{{ redisPort }}.service"
+  with_items: "{{ redisPorts }}"
+  notify:
+    - restart redis
+
+
+#- name: show
+#  debug: msg={{ item }}
+#  with_items: "{{ port }}"
+#  run_once: true

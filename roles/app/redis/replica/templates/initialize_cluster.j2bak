@@ -1,0 +1,9 @@
+#host_string="{% for host in groups['all'] %}{{ hostvars[host]['inventory_hostname'] }}:6379 {% endfor %}"
+host_string=
+{%- for host in groups['redis'] -%}
+  {%- for redisPort in  hostvars[host]['redisReplica'] -%}
+    {{ hostvars[host]['ansible_host'] }}:{{ redisPort }} 
+  {%- endfor -%}
+{%- endfor -%}
+
+  

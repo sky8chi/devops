@@ -1,0 +1,18 @@
+---
+# tasks file for master
+
+#- name: Create initialization script
+#  template: src=initialize_cluster.j2 dest=initialize_cluster.sh
+#  delegate_to: localhost
+#
+#
+- name: set fact redisDir
+  set_fact:
+    redisDir: "{{ redisInstallDir }}/{{ redisVersion }}"
+
+- name: Create initialization script
+  template: src=initialize_cluster.j2 dest={{ redisDir }}/initialize_cluster.sh
+
+- name: Initialize cluster
+  shell: bash {{ redisDir }}/initialize_cluster.sh
+

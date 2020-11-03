@@ -1,0 +1,13 @@
+port {{ redisPort }}
+daemonize yes
+protected-mode no
+pidfile /var/run/redis_{{ redisPort }}.pid
+logfile {{ redisDir }}/log/redis-{{ redisPort }}.log
+dir {{ redisDir }}/data
+dbfilename dump-{{ redisPort }}.rdb
+appendfilename appendonly-{{ redisPort }}.aof
+cluster-enabled yes
+cluster-config-file {{ redisDir }}/node/nodes-{{ redisPort }}.conf
+
+
+

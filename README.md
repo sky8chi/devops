@@ -47,6 +47,33 @@
   sh run_app.sh nfs
   ```
 
+* redis
+
+  ```
+  redis:
+        hosts:
+          L3:
+            redisPorts: ["6379", "6378"]  # 开启的redis端口
+          L4:
+            redisPorts: ["6379", "6378"]
+          L5:
+            redisPorts: ["6379", "6378"]
+        vars:
+          redisVersion: redis-6.0.6				# redis版本
+          redisInstallDir: /home/data     # redis安装目录
+          redisReplica:                   # redis集群主从关系
+            - {"L3": "6379", "L4": "6378"}   
+            - {"L4": "6379", "L5": "6378"}
+            - {"L5": "6379", "L3": "6378"}
+            
+            
+  sh run_app.sh redis  # 安装redis
+  sh run_app.sh redis-replica  # 上面redis的部分命令，建立集群关系
+  ```
+
+  
+
 ## k8s
 
 > https://api.playbook.cloud/v1/modules/k8s.html
+

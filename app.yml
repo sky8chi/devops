@@ -99,3 +99,15 @@
   tags:
     - redis-replica
     - redis
+
+#=====================rabbitmq=====================
+- hosts: rabbitmq
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    rabbitmqVersion: 3.8.9
+    erlangVersion: 23.1
+  roles:
+    - app/rabbitmq/common
+  tags:
+    - rabbitmq

@@ -1,0 +1,6 @@
+
+
+- name: start rabbitmq server
+  shell: rabbitmq-server -detached
+  notify:
+    - enable_plugin

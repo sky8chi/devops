@@ -1,0 +1,8 @@
+---
+# tasks file for rabbitmq
+- include: download.yml
+- include: prepare_env.yml
+- include: install.yml
+- include: ctl.yml
+  environment:
+    PATH: "{{ rabbitmqDir }}/sbin:{{ ansible_env.PATH }}"

@@ -1,0 +1,49 @@
+#- name: print all 内置 vars
+#  debug: var=hostvars[inventory_hostname]
+#
+- name: set local role files path
+  set_fact:
+    role_files_path: "{{ role_path }}/files"
+  delegate_to: localhost
+
+- name: check rabbitmq file exist
+  stat:
+    path: "{{ role_files_path }}/rabbitmq-server-generic-unix-{{ rabbitmqVersion }}.tar.xz"
+  register: rabbitmqFileResult
+  delegate_to: localhost
+
+- name: download rabbitmq {{ rabbitmqVersion }}
+  get_url:
+    url: https://github.com/rabbitmq/rabbitmq-server/releases/download/v{{ rabbitmqVersion }}/rabbitmq-server-generic-unix-{{ rabbitmqVersion }}.tar.xz
+    dest: "{{ role_files_path }}"
+  when: not rabbitmqFileResult.stat.exists
+  delegate_to: localhost
+  run_once: true
+
+- name: check erlang file exist
+  stat:
+    path: "{{ role_files_path }}/{{ erlangRpmName }}"
+  register: erlangFileResult
+  delegate_to: localhost
+
+- name: download erlang {{ erlangVersion }}
+  get_url:
+    url: https://github.com/rabbitmq/erlang-rpm/releases/download/v{{ erlangVersion }}/{{ erlangRpmName }}
+    dest: "{{ role_files_path }}"
+  when: not erlangFileResult.stat.exists
+  delegate_to: localhost
+  run_once: true
+
+- name: check make file exist
+  stat:
+    path: "{{ role_files_path }}/make-{{ makeVersion }}.tar.gz"
+  register: makeFileResult
+  delegate_to: localhost
+
+- name: download make {{ makeVersion }}
+  get_url:
+    url: http://ftp.gnu.org/gnu/make/make-{{ makeVersion }}.tar.gz
+    dest: "{{ role_files_path }}"
+  when: not makeFileResult.stat.exists
+  delegate_to: localhost
+  run_once: true

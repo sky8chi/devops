@@ -1,0 +1,14 @@
+- hosts: "{{ showInfoHost }}"
+  gather_facts: false
+  tasks: 
+    - name: show vars
+      debug: msg="{{hostvars[item]}}"
+      with_items: "{{groups[showInfoHost]}}"
+      tags: group
+
+- hosts: "{{ showInfoHost }}"
+  gather_facts: false
+  tasks:
+    - name: show vars
+      debug: msg="{{hostvars[showInfoHost]}}"
+      tags: host

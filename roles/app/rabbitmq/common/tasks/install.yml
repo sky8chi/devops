@@ -1,0 +1,77 @@
+
+#- name: install check make version
+#  shell: make -v | head -n 1|awk '{print $3}'
+#  register: makeVerResult
+#
+#- name: show v
+#  debug: var=makeVerResult.stdout|float
+#
+#- name: Unpacking make
+#  unarchive:
+#    creates: "{{ makeDir }}"
+#    src: "make-{{ makeVersion }}.tar.gz"
+#    dest: "{{ makeInstallDir }}"
+#    remote_src: no
+#  when: "makeVerResult.stdout|float < 4"
+#
+#- name: Check if make bin file is already configured.
+#  stat: path={{ makeDir }}/make
+#  register: make_bin_file_result
+#  when: "makeVerResult.stdout|float < 4"
+#
+#- name: install make
+#  shell: "./configure && make && make install"
+#  args:
+#    chdir: "{{ makeDir }}"
+#  when: 
+#    - "makeVerResult.stdout|float < 4"
+#    - not make_bin_file_result.stat.exists
+#
+#- name: Unpacking erlang
+#  unarchive:
+#    creates: "{{ erlangDir }}" 
+#    src: "otp_src_{{ erlangVersion }}.tar.gz"
+#    dest: "{{ erlangInstallDir }}"
+#    remote_src: no
+#
+#- name: Check if erlang bin file is already configured.
+#  stat: path={{ erlangDir }}/bin/erl
+#  register: erlang_bin_file_result
+
+- name: copy erlang rpm
+  copy:
+    src: "{{ erlangRpmName }}"
+    dest: "{{ erlangInstallDir }}"
+    force: false
+
+- name: install erlang
+  yum:
+    name: "{{ erlangInstallDir }}/{{ erlangRpmName }}"
+  register: install_erlang_result
+
+- name: show install erlang result
+  debug: var=install_erlang_result
+#  when: not erlang_bin_file_result.stat.exists
+
+#- name: set erlang env
+#  lineinfile:
+#    dest: ~/.bashrc
+#    line: PATH={{ erlangDir }}/bin:$PATH
+
+- name: Unpacking rabbitmq
+  unarchive:
+    creates: "{{ rabbitmqDir }}"
+    src: "rabbitmq-server-generic-unix-{{ rabbitmqVersion }}.tar.xz"
+    dest: "{{ rabbitmqInstallDir }}"
+    remote_src: no
+
+- name: set rabbitmq env
+  lineinfile:
+    dest: ~/.bashrc
+    line: PATH={{ rabbitmqDir }}/sbin:$PATH
+
+- name: copy rabbitmq config
+  template:
+    src: rabbitmq.conf.j2
+    dest: "{{ rabbitmqDir }}/etc/rabbitmq/rabbitmq.conf"
+    

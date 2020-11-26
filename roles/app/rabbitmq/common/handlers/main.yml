@@ -1,0 +1,12 @@
+---
+# handlers file for rabbitmq
+
+- name: enable_plugin
+  shell: rabbitmq-plugins enable rabbitmq_management
+
+- name: start rabbitmq
+  shell: rabbitmqctl start_app
+  register: start_info
+
+- name: start rabbitmq info
+  debug: var=start_info

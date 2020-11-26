@@ -1,0 +1,10 @@
+- name: install depend package
+  yum: 
+    name: ["gcc", "gcc-c++", "fop.noarch", "ncurses-devel", "libtool", "make",  "zlib-devel", "openssl-devel"]
+  register: erlang_yum_result
+
+
+- name: show yum 
+  debug: var="erlang_yum_result.results"
+
+

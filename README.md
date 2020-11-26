@@ -71,6 +71,23 @@
   sh run_app.sh redis-replica  # 上面redis的部分命令，建立集群关系
   ```
 
+
+* rabbitmq单机 
+
+  ```yaml
+  # hosts
+  rabbitmq:
+        hosts:
+          L1:
+  
+  #app.yml        
+  rabbitmqVersion: 3.8.9
+  erlangVersion: 23.1
+  centosVersion: 7.8
+  
+  sh run_app.sh rabbitmq
+  ```
+
   
 
 ## k8s

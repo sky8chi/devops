@@ -1,0 +1,5 @@
+---
+# defaults file for helm
+role_files_path: "{{ role_path }}/files"
+helmVersion: 3.3.1
+

@@ -1,0 +1,33 @@
+---
+# tasks file for helm
+
+- name: check helm file exist
+  stat:
+    path: "{{ role_files_path }}/helm-v{{ helmVersion }}-linux-amd64.tar.gz"
+  register: helmFileResult
+  delegate_to: localhost
+  run_once: true
+
+- name: download helm {{ helmVersion }}
+  get_url:
+    url: https://get.helm.sh/helm-v{{ helmVersion }}-linux-amd64.tar.gz
+    dest: "{{ role_files_path }}"
+  when: not helmFileResult.stat.exists
+  delegate_to: localhost
+  run_once: true
+
+- name: Unpacking helm
+  unarchive:
+    creates: "linux-amd64"
+    src: "helm-v{{ helmVersion }}-linux-amd64.tar.gz"
+    dest: "{{ role_files_path }}"
+    remote_src: no
+  delegate_to: localhost
+  run_once: true
+
+- name: copy helm 
+  copy:
+    src: "linux-amd64/helm"
+    dest: "/usr/local/bin/"
+    mode: 0755
+

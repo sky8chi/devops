@@ -1,0 +1,6 @@
+- name: start a nfs storageClass
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'storageClass.yml.j2') }}"
+    validate:
+      fail_on_error: no

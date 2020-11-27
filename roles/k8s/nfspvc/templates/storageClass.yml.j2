@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ pvDeployName }}
+  namespace: {{ namespace }}
+provisioner: {{ provisionerName }}
+parameters:
+  archiveOnDelete: "false"

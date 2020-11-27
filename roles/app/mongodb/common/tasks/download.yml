@@ -1,0 +1,13 @@
+- name: check mongodb file exist
+  stat:
+    path: "{{ role_files_path }}/{{ mongodbName }}"
+  register: mongodb_file_result
+  delegate_to: localhost
+
+- name: download mongodb {{ mongodbName }}
+  get_url:
+    url: "{{ mongodbUrl }}"
+    dest: "{{ role_files_path }}"
+  when: not mongodb_file_result.stat.exists
+  delegate_to: localhost
+  run_once: true

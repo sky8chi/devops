@@ -1,0 +1,6 @@
+---
+# tasks file for common
+- debug: msg="{{ mongodbUrl }}"
+- include: download.yml
+- include: install.yml
+- include: ctl.yml 

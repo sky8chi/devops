@@ -111,3 +111,12 @@
     - app/rabbitmq/common
   tags:
     - rabbitmq
+
+#-----------------------mongodb================
+- hosts: mongodb
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - app/mongodb/common
+  tags:
+    - mongodb

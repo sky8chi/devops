@@ -1,0 +1,28 @@
+ 
+- name: copy mongodb rpm
+  copy:
+    src: "{{ mongodbName }}"
+    dest: "{{ mongodbInstallDir }}"
+    force: false
+
+- name: install mongodb
+  yum:
+    name: "{{ mongodbInstallDir }}/{{ mongodbName }}"
+  register: install_mongodb_result
+
+- name: show install mongodb result
+  debug: var=install_mongodb_result
+
+- name: create mongodb dir
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ mongodbConfigPath }}"
+    - "{{ mongodbLogPath }}"
+    - "{{ mongodbDbPath }}"
+
+- name: cp mongdb config
+  template:
+    src: mongodb.properties.j2
+    dest: "{{ mongodbConfigPath }}/mongodb.properties"

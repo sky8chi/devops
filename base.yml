@@ -7,7 +7,7 @@
     - { role: base/nopasswd_machine, tags: nopasswd_machine }
     - role: base/ssh_speed_up
     - role: base/stop_firewalld
-    - role: base/close_selinux
+    - { role: base/close_selinux, tags: close_selinux }
     - role: base/yum_install
 
 - hosts: all

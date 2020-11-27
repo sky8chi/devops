@@ -1,0 +1,20 @@
+---
+# defaults file for common
+
+centosVersion: 7.8
+centosMainVersion: "{{ (centosVersion|string).split('.')[0] }}"
+
+role_files_path: "{{ role_path}}/files"
+
+mongodbVersion: 4.4.2
+mongodbSecVersion: "{{ (mongodbVersion|string).split('.')[0:2:1] | join('.') }}"
+mongodbInstallDir: /home/data
+mongodbDir: "{{ mongodbInstallDir }}/mongodb"
+mongodbName: "mongodb-org-server-{{ mongodbVersion }}-1.el{{ centosMainVersion }}.x86_64.rpm"
+mongodbUrl: https://repo.mongodb.org/yum/redhat/{{ centosMainVersion }}/mongodb-org/{{ mongodbSecVersion }}/x86_64/RPMS/{{ mongodbName }}
+mongodbConfigPath: "{{ mongodbDir }}/config"
+mongodbDbPath: "{{ mongodbDir }}/data"
+mongodbLogPath: "{{ mongodbDir }}/logs"
+mongodbPort: 27017
+
+

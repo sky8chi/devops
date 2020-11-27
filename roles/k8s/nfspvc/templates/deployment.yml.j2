@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nfs-client-provisioner
+  name: {{ pvDeployName }}
   labels:
-    app: nfs-client-provisioner
+    app: {{ pvDeployName }}
   namespace: {{ namespace }}
 spec:
   replicas: 1
@@ -24,7 +24,7 @@ spec:
               mountPath: /persistentvolumes   # 此处不能更改，这是镜像默认生成pv地址，当时改了这块，死活不生效，pvc pv又是创建成功，查了好久
           env:
             - name: PROVISIONER_NAME
-              value: {{ pvName }}
+              value: {{ provisionerName }}
             - name: NFS_SERVER
               value: {{ nfsServer }}
             - name: NFS_PATH

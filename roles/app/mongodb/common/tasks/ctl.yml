@@ -1,0 +1,5 @@
+- name: run mongodb
+  shell: mongod -f {{ mongodbConfigPath }}/mongodb.properties
+  register: run_mongodb_result
+
+- debug: var=run_mongodb_result

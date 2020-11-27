@@ -1,8 +1,9 @@
 namespace: nfs
 serviceAccountName: nfs-client-provisioner
 
+# storageclaa name
 pvDeployName: nfs-client-provisioner
-pvName: nfs-pv
+provisionerName: nfs-pv
 
 nfsServer: "{{ hostvars['nfs']['ansible_host'] }}"
 nfsPath: /data/nfs

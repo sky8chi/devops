@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ project_name }}
+  namespace: {{ namespace }}
+  labels:
+    app: {{ project_name }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ project_name }}
+    spec:
+      containers:
+      - name: {{ project_name }}
+        image: {{ project_image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          timeoutSeconds: 10
+          httpGet:
+            scheme: HTTP
+            port: 8080
+            path: /test/keepAlive
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          httpGet:
+            scheme: HTTP
+            port: 8080
+            path: /test/keepAlive
+#        volumeMounts:
+#        - name: app-logs
+#          mountPath: /home/tomcat/logs
+#      volumes:
+#      - name: app-logs 
+#        emptyDir: {} 
+  selector:
+    matchLabels:
+      app: {{ project_name }}
+  replicas: 3

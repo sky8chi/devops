@@ -1,0 +1,6 @@
+---
+# defaults file for demo
+
+namespace: demo
+project_name: springboot-demo
+project_image: harbor.kxfo.com/mall/demo:1.0.0.0

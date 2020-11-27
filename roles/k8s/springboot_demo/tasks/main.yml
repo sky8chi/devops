@@ -1,0 +1,5 @@
+- include: namespace.yml
+#- include: serviceAccount.yml
+- include: deployment.yml
+- include: service.yml
+- include: ingress.yml

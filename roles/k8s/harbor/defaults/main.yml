@@ -1,0 +1,10 @@
+---
+# defaults file for harbor
+
+harbor_ip: "10.200.120.236"
+harbor_hostname: "harbor.kxfo.com"
+harbor_certs: 
+  - ca.crt
+  - harbor.kxfo.com.cert
+  - harbor.kxfo.com.key
+docker_certs_path: "/etc/docker/certs.d"

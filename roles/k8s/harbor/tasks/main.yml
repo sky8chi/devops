@@ -1,0 +1,19 @@
+---
+# tasks file for harbor
+#
+
+- name: add harbor ip to k8s
+  lineinfile: 
+    dest: /etc/hosts 
+    line: "{{ harbor_ip }} {{ harbor_hostname }}"
+
+- name: create ca dir if not exist
+  file:
+    path: "{{ docker_certs_path }}/{{ harbor_hostname }}"
+    state: directory
+
+- name: add ca
+  copy:
+    src: "{{ item }}"
+    dest: "{{ docker_certs_path }}/{{ harbor_hostname }}"
+  with_items: "{{ harbor_certs }}"

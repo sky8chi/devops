@@ -1,0 +1,29 @@
+---
+# tasks file for elk
+#
+- name: add es repo
+  shell: 
+    cmd: helm repo add elastic https://helm.elastic.co
+    chdir: "{{ role_files_path }}"
+    creates: elasticsearch-7.9.1.tgz
+  delegate_to: localhost
+  run_once: true
+
+- name: download es
+  shell: 
+    cmd: helm fetch elastic/elasticsearch --version 7.9.1
+    chdir: "{{ role_files_path }}" 
+    creates: elasticsearch-7.9.1.tgz
+  delegate_to: localhost
+  run_once: true
+
+
+- name: download kibana
+  shell:
+    cmd: helm fetch elastic/kibana --version 7.9.1
+    chdir: "{{ role_files_path }}"
+    creates: kibana-7.9.1.tgz
+  delegate_to: localhost
+  run_once: true
+
+

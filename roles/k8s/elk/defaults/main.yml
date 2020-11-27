@@ -1,0 +1,17 @@
+---
+# defaults file for elk
+namespace: elk
+role_files_path: "{{ role_path }}/files"
+
+elkInstallDir: /data
+elkDir: "{{ elkInstallDir }}/elk"
+
+
+es_storage_class_name: nfs-client-provisioner
+es_storage_size: 100Gi
+
+
+es_clusterName: "elasticsearch"
+es_nodeGroup: "master"
+
+

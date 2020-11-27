@@ -1,0 +1,41 @@
+- name: create file if not exist
+  file:
+    path: "{{ elkDir }}"
+    state: directory
+
+- name: unarchive es
+  unarchive:
+    src: elasticsearch-7.9.1.tgz
+    dest: "{{ elkDir }}"
+    creates: "{{ elkDir }}/elasticsearch"
+
+- name: unarchive kibana
+  unarchive:
+    src: kibana-7.9.1.tgz
+    dest: "{{ elkDir }}"
+    creates: "{{ elkDir }}/kibana"
+
+- name: copy es values.yml
+  template:
+    src: es_values.yaml.j2
+    dest: "{{ elkDir }}/elasticsearch/values.yaml"
+
+- name: copy kibana values.yml
+  vars:
+    ansible_python_interpreter: /usr/bin/python2
+  template:
+    src: kibana_values.yaml.j2
+    dest: "{{ elkDir }}/kibana/values.yaml"
+
+
+- name: install es
+  shell:
+    cmd: helm delete --namespace {{ namespace}}  my-es; helm install --namespace {{ namespace}} my-es -f values.yaml .
+    chdir: "{{ elkDir }}/elasticsearch"
+
+- name: install kibana
+  shell:
+    cmd: helm delete --namespace {{ namespace}} my-kibana; helm install --namespace {{ namespace}} my-kibana -f values.yaml .
+    chdir: "{{ elkDir }}/kibana"
+
+

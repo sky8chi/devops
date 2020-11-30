@@ -94,3 +94,55 @@
 
 > https://api.playbook.cloud/v1/modules/k8s.html
 
+* 使用pip3实装k8s模块对应的软件
+
+  ```shell
+  sh run_k8s.sh pip
+  
+  # 如果有其他依赖修改 roles/k8s/pip/tasks/pip.yml
+  ```
+
+* nfspvc
+
+  ```shell
+  # k8s 集群支持动态pvc
+  sh run_k8s.sh nfspvc
+  
+  # 配置见default
+  ```
+
+* harbor
+
+  ```shell
+  # k8s集群加入harbor   host及证书
+  sh run_k8s.sh harbor
+  ```
+
+* helm
+
+  ```shell
+  # k8s master节点及当前机器安装helm
+  sh run_k8s.sh helm
+  ```
+
+* elk
+
+  ```shell
+  # 通过helm安装elk
+  sh run_k8s.sh elk
+  
+  # 集群配置 通过修改templates 模板
+  ```
+
+* springboot_demo
+
+  ```shell
+  # springboot测试集群发布
+  sh run_k8s.sh springboot_demo
+  
+  # 项目见 https://github.com/sky8chi/springboot-k8s-test
+  # 项目打包镜像到harbor，deployment拉取镜像运行
+  ```
+
+  
+

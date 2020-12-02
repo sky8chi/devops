@@ -1,0 +1,10 @@
+---
+# defaults file for gateway
+namespace: easymock
+project_name: easymock 
+
+ingress_host: easymock.kube.kxfo.com
+
+application_port: 7300
+
+service_port: 7300

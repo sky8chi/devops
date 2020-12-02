@@ -81,3 +81,13 @@
     - { role: k8s/pay/mch, tags: pay_mch }
     - { role: k8s/pay/sample_shop, tags: pay_sampleShop }
   tags: pay
+
+- hosts: k8s_M[0]
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - role: k8s/easymock
+  tags: easymock

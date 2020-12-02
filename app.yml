@@ -83,7 +83,7 @@
     - nfs_cli
 
 #========================moongo=====================
-- hosts: redis
+- hosts: redis, redis_single
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
   roles:

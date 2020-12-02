@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ project_name }}
+  namespace: {{ namespace }}
+  labels:
+    app: {{ project_name }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ project_name }}
+    spec:
+      containers:
+      - name: {{ project_name }}
+        image: easymock/easymock:1.6.0
+        command: ["/bin/bash", "-c", "npm start"]
+        #- /bin/bash -c "npm start"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ application_port }}
+        volumeMounts:
+        - name: "production-json"
+          mountPath: "/home/easy-mock/easy-mock/config"
+      volumes:
+      - name: "production-json"
+        configMap:
+          name: {{ project_name }}
+          items:
+          - key: production.json
+            path: "production.json"
+  selector:
+    matchLabels:
+      app: {{ project_name }}
+  replicas: 1

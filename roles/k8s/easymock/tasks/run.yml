@@ -1,0 +1,6 @@
+- include: namespace.yml
+#- include: serviceAccount.yml
+- include: configmap.yml
+- include: deployment.yml
+- include: service.yml
+- include: ingress.yml

@@ -1,0 +1,6 @@
+- name: start a {{ project_name }} configmap
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'configmap.yml.j2') }}"
+    validate:
+      fail_on_error: no

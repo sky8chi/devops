@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ project_name }}
+  namespace: {{ namespace }}
+data:
+  production.json: |
+    {
+      "port": {{ application_port }},
+      "host": "0.0.0.0",
+      "pageSize": 30,
+      "proxy": false,
+      "db": "mongodb://10.200.120.212:27017",
+      "unsplashClientId": "",
+      "redis": {
+        "keyPrefix": "[Easy Mock]",
+        "port": 6379,
+        "host": "10.200.120.211",
+        "password": "",
+        "db": 0
+      },
+      "blackList": {
+        "projects": [],
+        "ips": []
+      },
+      "rateLimit": {
+        "max": 1000,
+        "duration": 1000
+      },
+      "jwt": {
+        "expire": "14 days",
+        "secret": "shared-secret"
+      },
+      "upload": {
+        "types": [".jpg", ".jpeg", ".png", ".gif", ".json", ".yml", ".yaml"],
+        "size": 5242880,
+        "dir": "../public/upload",
+        "expire": {
+          "types": [".json", ".yml", ".yaml"],
+          "day": -1
+        }
+      },
+      "ldap": {
+        "server": "ldap://xxx.xxx.xxx.xxx:389",
+        "bindDN": "CN=AD认证,OU=运维,OU=技术部,OU=公共支持部门,OU=xxxx,DC=office,DC=xxxxxx,DC=com",
+        "password": "xxxxxxx",
+        "filter": {
+          "base": "ou=xxxxxx,dc=office,dc=xxxxxx,dc=com",
+          "attributeName": "sAMAccountName"
+        }
+      },
+      "fe": {
+        "copyright": "",
+        "storageNamespace": "easy-mock_",
+        "timeout": 25000,
+        "publicPath": "/dist/"
+      }
+    }

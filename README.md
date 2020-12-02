@@ -49,8 +49,10 @@
 
 * redis
 
-  ```
-  redis:
+  ```shell
+  # redis集群
+  # host配置
+  	redis:
         hosts:
           L3:
             redisPorts: ["6379", "6378"]  # 开启的redis端口
@@ -69,6 +71,23 @@
             
   sh run_app.sh redis  # 安装redis
   sh run_app.sh redis-replica  # 上面redis的部分命令，建立集群关系
+  
+  # 单实例
+  
+  # host配置
+  	redis_single:
+        hosts:
+          L1:
+            redisPorts: ["6379"]
+        vars:
+          redisVersion: redis-6.0.6
+          redisInstallDir: /home/data
+          
+  ansible-playbook -t redis -i inventory/cluster/hosts.yml app.yml -l L1
+  
+  # 修改config/redis-6379.conf 重启
+  cluster-enabled no
+  
   ```
 
 
@@ -179,8 +198,18 @@
   
   #*** sample shop
   sh run_k8s.sh pay_sample-shop_deploy
-sh run_k8s.sh pay_sample-shop_delete_deployment
+  sh run_k8s.sh pay_sample-shop_delete_deployment
   ansible-playbook -t clean_image -i inventory/cluster/hosts.yml k8s.yml -e "image_label=app=pay_sample-shop until_time=2s"
   ```
+
+* easymock
+
+  ```shell
+  # 修改配置 （redis不支持集群）
+  mv templates/configmap.yml.j2.example templates/configmap.yml.j2
   
+  sh run_k8s.sh pay_easymock_deploy
+  sh run_k8s.sh pay_easymock_delete_deployment
+  ```
+
   

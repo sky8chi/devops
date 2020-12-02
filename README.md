@@ -144,5 +144,43 @@
   # 项目打包镜像到harbor，deployment拉取镜像运行
   ```
 
-  
+* clean_image
 
+  ```shell
+  # 清理镜像
+  sh run_k8s.sh clean_image
+  # 修改k8s.yml 参数控制 或直接执行命令 
+  
+  ansible-playbook -t clean_image -i inventory/cluster/hosts.yml k8s.yml -e "image_label=app=pay_gateway until_time=2s"
+  ```
+
+* pay
+
+  ```shell
+  # 源代码  https://github.com/sky8chi/roncoo-pay.git
+  
+  
+  #*** 运营系统
+  # 部署
+  sh run_k8s.sh pay_boss_deploy
+  # 删除deployment （此步骤用于不改镜像版本的情况，更新镜像。需要结合清理镜像）
+  sh run_k8s.sh pay_boss_delete_deployment
+  ansible-playbook -t clean_image -i inventory/cluster/hosts.yml k8s.yml -e "image_label=app=pay_boss until_time=2s"
+  
+  #*** 商户系统
+  sh run_k8s.sh pay_mch_deploy
+  sh run_k8s.sh pay_mch_delete_deployment
+  ansible-playbook -t clean_image -i inventory/cluster/hosts.yml k8s.yml -e "image_label=app=pay_mch until_time=2s"
+  
+  #*** gateway
+  sh run_k8s.sh pay_gateway_deploy
+  sh run_k8s.sh pay_gateway_delete_deployment
+  ansible-playbook -t clean_image -i inventory/cluster/hosts.yml k8s.yml -e "image_label=app=pay_gateway until_time=2s"
+  
+  #*** sample shop
+  sh run_k8s.sh pay_sample-shop_deploy
+sh run_k8s.sh pay_sample-shop_delete_deployment
+  ansible-playbook -t clean_image -i inventory/cluster/hosts.yml k8s.yml -e "image_label=app=pay_sample-shop until_time=2s"
+  ```
+  
+  

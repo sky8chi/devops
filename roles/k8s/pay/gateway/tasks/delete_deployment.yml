@@ -1,0 +1,6 @@
+- name: delete a {{ project_name }} deployment
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'deployment.yml.j2') }}"
+    validate:
+      fail_on_error: no

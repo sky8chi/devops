@@ -1,0 +1,14 @@
+---
+# defaults file for gateway
+namespace: pay
+project_name: "boss"
+project_image: harbor.kxfo.com/pay/roncoo-pay-web-boss:2.1.2-SNAPSHOT
+
+ingress_host: pay.kube.kxfo.com
+#ingress_path: /boss
+#ingress_path_rewrite1: /boss/(.*)
+
+application_name: roncoo-pay-web-boss
+application_port: 8091
+
+service_port: 8080

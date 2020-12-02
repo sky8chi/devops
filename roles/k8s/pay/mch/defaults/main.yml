@@ -1,0 +1,14 @@
+---
+# defaults file for gateway
+namespace: pay
+project_name: mch
+project_image: harbor.kxfo.com/pay/roncoo-pay-web-merchant:2.1.2-SNAPSHOT
+
+ingress_host: pay.kube.kxfo.com
+#ingress_path: /mch
+#ingress_path_rewrite1: /boss/(.*)
+
+application_name: roncoo-pay-web-merchant
+application_port: 8093
+
+service_port: 8080

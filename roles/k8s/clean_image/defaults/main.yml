@@ -1,0 +1,4 @@
+---
+# defaults file for clean_image
+image_label: "app=springbootDemo"
+until_time: 24h

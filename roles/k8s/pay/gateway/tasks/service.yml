@@ -1,0 +1,6 @@
+- name: start a {{ project_name }} service
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'service.yml.j2') }}"
+    validate:
+      fail_on_error: no

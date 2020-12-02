@@ -1,0 +1,4 @@
+- include: run.yml
+  tags: pay_mch_deploy
+- include: delete_deployment.yml
+  tags: pay_mch_delete_deployment

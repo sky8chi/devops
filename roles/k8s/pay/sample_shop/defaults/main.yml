@@ -1,0 +1,14 @@
+---
+# defaults file for gateway
+namespace: pay
+project_name: sample-shop
+project_image: harbor.kxfo.com/pay/roncoo-pay-web-sample-shop:2.1.2-SNAPSHOT
+
+ingress_host: pay.kube.kxfo.com
+#ingress_path: /mch
+#ingress_path_rewrite1: /boss/(.*)
+
+application_name: roncoo-pay-web-sample-shop
+application_port: 8094
+
+service_port: 8080

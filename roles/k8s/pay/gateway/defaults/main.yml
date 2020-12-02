@@ -1,0 +1,12 @@
+---
+# defaults file for gateway
+namespace: pay
+project_name: gateway
+project_image: harbor.kxfo.com/pay/roncoo-pay-web-gateway:2.1.2-SNAPSHOT
+
+ingress_host: pay.kube.kxfo.com
+
+application_name: roncoo-pay-web-gateway
+application_port: 8092
+
+service_port: 8080

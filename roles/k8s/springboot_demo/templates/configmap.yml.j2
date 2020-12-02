@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ project_name }}-filebeat
+  namespace: {{ namespace }}
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+      - type: log
+        enabled: true 
+        paths:
+          - "/log/error.log"
+        multiline.pattern: '^[0-9]'
+        multiline.negate: true
+        multiline.match: after
+        fields:
+          type: "error"
+      - type: log
+        paths:
+          - "/log/warn.log"
+        multiline.pattern: '^[0-9]'
+        multiline.negate: true
+        multiline.match: after
+        fields:
+          type: "warn"
+      - type: log
+        paths:
+          - "/log/info.log"
+        multiline.pattern: '^[0-9]'
+        multiline.negate: true
+        multiline.match: after
+        fields:
+          type: "info"
+    output.elasticsearch:
+      hosts: ["elasticsearch-master.elk:9200"]
+      indices:
+        - index: "springbootdemo-info-log"
+          when.equals:
+            fields.type: "info"
+        - index: "springbootdemo-warn-log"
+          when.equals:
+            fields.type: "warn"
+        - index: "springbootdemo-error-log"
+          when.equals:
+            fields.type: "error"

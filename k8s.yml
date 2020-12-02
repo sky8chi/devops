@@ -43,6 +43,7 @@
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
   vars: 
     ansible_python_interpreter: /usr/bin/python3
+    project_image: harbor.kxfo.com/mall/demo:1.0.0.1
   roles:
     - role: k8s/springboot_demo
   tags: springboot_demo
@@ -57,6 +58,26 @@
     - role: k8s/elk
   tags: elk
 
+- hosts: k8s
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    - image_label: app=pay_gateway
+    - until_time: 1s
+  roles:
+    - role: k8s/clean_image
+  tags: clean_image
 
-
-
+- hosts: k8s_M[0]
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - { role: k8s/pay/gateway, tags: pay_gateway }
+    - { role: k8s/pay/boss, tags: pay_boss }
+    - { role: k8s/pay/mch, tags: pay_mch }
+    - { role: k8s/pay/sample_shop, tags: pay_sampleShop }
+  tags: pay

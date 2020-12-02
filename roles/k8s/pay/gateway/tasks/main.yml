@@ -1,0 +1,4 @@
+- include: run.yml
+  tags: pay_gateway_deploy
+- include: delete_deployment.yml
+  tags: pay_gateway_delete_deployment

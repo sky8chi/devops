@@ -1,0 +1,6 @@
+- name: add {{ project_name }} ingress
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'ingress.yml.j2') }}"
+    validate:
+      fail_on_error: no

@@ -1,0 +1,4 @@
+- include: run.yml
+  tags: pay_sample-shop_deploy
+- include: delete_deployment.yml
+  tags: pay_sample-shop_delete_deployment

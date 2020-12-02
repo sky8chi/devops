@@ -1,0 +1,8 @@
+---
+# tasks file for clean_image
+- name: "clean images with label {{ image_label }} filter {{ until_time }}"
+  shell: docker image prune -a --force --filter "label={{ image_label }}" --filter "until={{ until_time }}"
+  register: clean_image_result
+
+- name: show clean image result
+  debug: var=clean_image_result.stdout

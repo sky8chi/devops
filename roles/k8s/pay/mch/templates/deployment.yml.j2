@@ -29,26 +29,26 @@ spec:
         image: {{ project_image }}
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
+        - containerPort: {{ application_port }}
         readinessProbe:
           initialDelaySeconds: 20
           periodSeconds: 5
           timeoutSeconds: 10
           httpGet:
             scheme: HTTP
-            port: 8080
-            path: /test/keepAlive
+            port: {{ application_port }}
+            path: {{ project_name }}/keepalive/ping
         livenessProbe:
           initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 5
           httpGet:
             scheme: HTTP
-            port: 8080
-            path: /test/keepAlive
+            port: {{ application_port }}
+            path: {{ project_name }}/keepalive/ping
         volumeMounts:
         - name: app-logs
-          mountPath: /home/tomcat/logs
+          mountPath: /data/log/opensource/pay/logs/{{ application_name }}
       volumes:
       - name: app-logs 
         emptyDir: {} 
@@ -58,4 +58,4 @@ spec:
   selector:
     matchLabels:
       app: {{ project_name }}
-  replicas: 3
+  replicas: 1

@@ -41,6 +41,24 @@
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  roles:
+    - role: k8s/istio
+  tags: istio
+
+- hosts: k8s_M[0]
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - role: k8s/dashboard
+  tags: dashboard
+
+- hosts: k8s_M[0]
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
   vars: 
     ansible_python_interpreter: /usr/bin/python3
     project_image: harbor.kxfo.com/mall/demo:1.0.0.1

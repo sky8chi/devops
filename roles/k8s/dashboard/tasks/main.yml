@@ -1,0 +1,7 @@
+- include: create_crt.yml
+- include: apply-crt.yml
+- include: service_account.yml
+- include: cluster_role_bind.yml
+- include: ingress.yml
+- include: show_token.yml
+  tags: dashboard_token

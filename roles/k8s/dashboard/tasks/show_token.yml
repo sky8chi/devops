@@ -1,0 +1,6 @@
+- name: run token
+  shell: kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kubernetes-dashboard-token | awk '{print $1}')
+  register: token_result
+
+- name: show token_result
+  debug: var=token_result.stdout

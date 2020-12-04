@@ -1,0 +1,11 @@
+---
+# defaults file for gateway
+role_files_path: "{{ role_path }}/files"
+namespace: kube-system
+project_name: kubernetes-dashboard
+
+ingress_host: dashboard.kube.kxfo.com
+service_port: 443
+
+base_dir: /home/data
+install_dir: "{{ base_dir }}/{{ project_name }}"

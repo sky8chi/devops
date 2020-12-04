@@ -1,0 +1,10 @@
+- name: create crt
+  shell: 
+    cmd:
+      openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout {{ role_files_path }}/tls.key -out {{ role_files_path }}/tls.crt -subj "/CN={{ ingress_host }}"
+    creates: "{{ role_files_path }}/tls.key"
+  delegate_to: localhost
+  register: create_crt_result
+
+- name: show create crt result
+  debug: var=create_crt_result.stdout

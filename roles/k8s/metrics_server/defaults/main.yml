@@ -1,0 +1,10 @@
+---
+# defaults file for helm
+role_files_path: "{{ role_path }}/files"
+metrics_server_version: 0.4.1
+
+project_name: metrics-server
+base_dir: /home/data
+install_dir: "{{ base_dir }}/{{ project_name }}"
+
+

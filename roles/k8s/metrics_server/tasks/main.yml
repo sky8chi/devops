@@ -1,0 +1,36 @@
+---
+# tasks file for helm
+
+- name: check metrics server file exist
+  stat:
+    path: "{{ role_files_path }}/components.yaml"
+  register: metricsServerFileResult
+  delegate_to: localhost
+  run_once: true
+
+- name: download metrics server {{ metrics_server_version }}
+  get_url:
+    url: https://github.com/kubernetes-sigs/metrics-server/releases/download/v{{ metrics_server_version }}/components.yaml
+    dest: "{{ role_files_path }}"
+  when: not metricsServerFileResult.stat.exists
+  delegate_to: localhost
+  run_once: true
+
+- name: add args
+  lineinfile:
+    path: "{{ role_files_path }}/components.yaml"
+    insertafter: "--secure-port=4443"
+    line: "        - --kubelet-insecure-tls"
+  delegate_to: localhost
+  run_once: true
+
+- name: apply yml
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'components.yaml') }}"
+    validate:
+      fail_on_error: no
+  register: apply_yml_result
+
+- name: show apply result
+  debug: var=apply_yml_result.stdout

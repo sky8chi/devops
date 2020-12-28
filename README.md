@@ -107,11 +107,40 @@
   sh run_app.sh rabbitmq
   ```
 
+* mongodb
+
+  ```shell
+  # hosts
+  mongodb:
+  	hosts:
+  		L2:
+  
+  sh run_app.sh mongodb
+  ```
+
   
 
 ## k8s
 
 > https://api.playbook.cloud/v1/modules/k8s.html
+
+* dashboard
+
+  ```shell
+  # 暴露dashboard
+  sh run_k8s.sh dashboard
+  # 获取token
+  sh run_k8s.sh dashboard_token
+  ```
+
+* metrics_server
+
+  ```shell
+  # 统计机器资源插件 安装成功dashboard会展示  （机器测试kubectl top pod）
+  sh run_k8s.sh metrics_server
+  ```
+
+  
 
 * 使用pip3实装k8s模块对应的软件
 
@@ -213,3 +242,4 @@
   ```
 
   
+

@@ -1,0 +1,10 @@
+---
+# handlers file for helm
+
+- name: delete_kiali
+  #shell: kubectl delete -f {{ installDir }}/samples/addons/kiali.yaml
+  shell: kubectl rollout status deployment/kiali -n istio-system
+  register: delete_kiali_result
+
+- name: show delete kiali result
+  debug: var=delete_kiali_result.stdout

@@ -1,0 +1,8 @@
+- include: copy_istio.yml
+  tags: 
+  - istio_ctl
+  - istio_kiali
+- include: istio_ctl.yml
+  tags: istio_ctl
+- include: kiali.yml
+  tags: istio_kiali

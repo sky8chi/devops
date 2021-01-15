@@ -1,0 +1,19 @@
+- name: install kiali
+  shell: kubectl apply -f {{ installDir }}/samples/addons/kiali.yaml
+  register: install_kiali_result
+  failed_when: False
+  
+
+- debug: var="install_kiali_result"
+  changed_when: install_kiali_result.rc > 0
+  failed_when: False
+  notify:
+  - delete_kiali
+  - show delete kiali result
+
+- name: add kiali ingress
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'kiali_ingress.yml.j2') }}"
+    validate:
+      fail_on_error: no

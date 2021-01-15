@@ -1,0 +1,17 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ kiali_project_name }}
+  namespace: {{ namespace }}
+spec:
+  rules:
+    - host: {{ kiali_ingress_host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              serviceName: {{ kiali_project_name }}
+              servicePort: {{ kiali_service_port }}
+            

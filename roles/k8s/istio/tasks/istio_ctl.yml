@@ -1,0 +1,43 @@
+---
+# tasks file for helm
+
+- name: check istio file exist
+  stat:
+    path: "{{ role_files_path }}/{{ istioFileName }}"
+  register: istioFileResult
+  delegate_to: localhost
+  run_once: true
+
+- name: download istio {{ istioVersion }}
+  get_url:
+    url: https://github.com/istio/istio/releases/download/{{ istioVersion }}/{{ istioFileName }}
+    dest: "{{ role_files_path }}"
+  when: not istioFileResult.stat.exists
+  delegate_to: localhost
+  run_once: true
+
+- name: Unpacking istio
+  unarchive:
+    creates: "{{ istioUnarchiveDirName }}"
+    src: "{{ istioFileName }}"
+    dest: "{{ role_files_path }}"
+    remote_src: no
+  delegate_to: localhost
+  run_once: true
+
+- name: copy istio
+  copy:
+    src: "{{ istioUnarchiveDirName }}/bin/istioctl"
+    dest: "/usr/local/bin/"
+    mode: 0755
+
+- name: copy istio bash
+  copy:
+    src: "{{ istioUnarchiveDirName }}/tools/istioctl.bash"
+    dest: "~/"
+    mode: 0755
+
+- name: add to bashrc
+  lineinfile:
+    dest: "~/.bashrc"
+    line: "source ~/istioctl.bash"

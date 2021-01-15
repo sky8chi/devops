@@ -1,0 +1,18 @@
+---
+# defaults file for helm
+role_files_path: "{{ role_path }}/files"
+istioVersion: 1.8.0
+istioFileName: istio-{{ istioVersion }}-linux-amd64.tar.gz
+istioUnarchiveDirName: istio-{{ istioVersion }}
+
+baseDir: /home/data
+installDir: "{{ baseDir }}/{{ istioUnarchiveDirName }}"
+
+
+namespace: istio-system
+
+
+kiali_project_name: kiali
+kiali_ingress_host: kiali.istio.kube.kxfo.com
+kiali_service_port: 20001
+

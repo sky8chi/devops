@@ -1,0 +1,2 @@
+- include: delete_kiali.yml
+  tags: istio_kiali

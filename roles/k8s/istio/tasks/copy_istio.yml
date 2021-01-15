@@ -1,0 +1,12 @@
+- name: istio dir state
+  stat:
+    path: "{{ installDir }}"
+  register: istio_dir_result
+    
+- name: copy istio
+  vars:
+    ansible_python_interpreter: /usr/bin/python2
+  copy:
+    src: "{{ istioUnarchiveDirName }}" 
+    dest: "{{ baseDir }}/"
+  when: not istio_dir_result.stat.exists

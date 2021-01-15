@@ -4,7 +4,7 @@
   remote_user: root
   tasks:
     - name: debug
-      debug:  msg={{ aaa }}
+      debug:  msg="fdffddff"
   tags: test
 
 

@@ -8,7 +8,7 @@
     - role: base/ssh_speed_up
     - role: base/stop_firewalld
     - { role: base/close_selinux, tags: close_selinux }
-    - role: base/yum_install
+    - { role: base/yum_install, tags: yum_install }
 
 - hosts: all
   remote_user: root

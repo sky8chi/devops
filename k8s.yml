@@ -41,6 +41,8 @@
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars: 
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - role: k8s/istio
   tags: istio

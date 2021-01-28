@@ -1,0 +1,10 @@
+- hosts: all
+  gather_facts: false
+  any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  vars:
+    gateway_ip: 10.200.120.211
+    dst_network_segment: 172.25.113.0/24
+  roles:
+    - other/vpn_route
+  tags:
+    - vpn_route

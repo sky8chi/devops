@@ -7,3 +7,4 @@
     path: /etc/selinux/config
     regexp: '^SELINUX=enforcing'
     replace: 'SELINUX=disabled'
+

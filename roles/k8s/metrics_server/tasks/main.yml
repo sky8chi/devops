@@ -24,6 +24,14 @@
   delegate_to: localhost
   run_once: true
 
+- name: replace image pull path
+  replace:
+    dest: "{{ role_files_path }}/components.yaml"
+    regexp: '^(\s+image: ).*'
+    replace: '\1registry.cn-shanghai.aliyuncs.com/gcr_org/metrics-server_metrics-server:v{{ metrics_server_version }}'
+  delegate_to: localhost
+  run_once: true
+
 - name: apply yml
   k8s:
     state: present
@@ -33,4 +41,4 @@
   register: apply_yml_result
 
 - name: show apply result
-  debug: var=apply_yml_result.stdout
+  debug: var=apply_yml_result

@@ -3,11 +3,14 @@
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
+  pre_tasks:
+    - name: "install python3"
+      raw: sudo yum install -y python3 python3-libselinux
   roles:
+    - { role: base/close_selinux, tags: close_selinux }
     - { role: base/nopasswd_machine, tags: nopasswd_machine }
     - role: base/ssh_speed_up
     - role: base/stop_firewalld
-    - { role: base/close_selinux, tags: close_selinux }
     - { role: base/yum_install, tags: yum_install }
 
 - hosts: all

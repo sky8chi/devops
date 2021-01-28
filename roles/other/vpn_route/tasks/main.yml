@@ -1,0 +1,12 @@
+---
+# tasks file for vpn_route
+#
+- name: add route
+  #shell: ip route add {{ dst_network_segment }} via {{ gateway_ip }} 
+  shell: ip route add {{ dst_network_segment }} via {{ gateway_ip }}
+  when: hostvars[inventory_hostname]['ansible_host'] != gateway_ip
+  register: add_route_info
+  failed_when: "'File exists' not in add_route_info.stderr and add_route_info.rc > 0"
+
+- name: show info
+  debug: var=add_route_info

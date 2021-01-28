@@ -1,5 +1,5 @@
 ---
-- hosts: k8s_M
+- hosts: k8s_m
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -10,7 +10,7 @@
   tags: pip
 
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -29,7 +29,7 @@
     - role: k8s/harbor
   tags: harbor
 
-- hosts: k8s_M[0], localhost
+- hosts: k8s_m[0], localhost
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -37,7 +37,7 @@
     - role: k8s/helm
   tags: helm
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -47,7 +47,7 @@
     - role: k8s/istio
   tags: istio
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -57,7 +57,7 @@
     - role: k8s/metrics_server
   tags: metrics_server
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -67,7 +67,7 @@
     - role: k8s/dashboard
   tags: dashboard
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -78,7 +78,7 @@
     - role: k8s/springboot_demo
   tags: springboot_demo
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -99,7 +99,7 @@
     - role: k8s/clean_image
   tags: clean_image
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"
@@ -112,7 +112,7 @@
     - { role: k8s/pay/sample_shop, tags: pay_sampleShop }
   tags: pay
 
-- hosts: k8s_M[0]
+- hosts: k8s_m[0]
   remote_user: root
   gather_facts: false
   any_errors_fatal: "{{ any_errors_fatal | default(true) }}"

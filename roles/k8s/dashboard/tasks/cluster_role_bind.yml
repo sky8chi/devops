@@ -1,3 +1,9 @@
+- name: delete a {{ project_name }} cluster role bind
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'cluster_role_bind.yml.j2') }}"
+    validate:
+      fail_on_error: no
 
 - name: start a {{ project_name }} cluster role bind
   k8s:
